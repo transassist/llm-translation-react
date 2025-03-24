@@ -1,0 +1,43 @@
+graph TD
+    Root["LLM TR Project"] --> DockerConfig["Dockerfile"]
+    Root --> ApiTS["api-client.ts"]
+    Root --> AppDir["app/"]
+    Root --> AIAppDir["ai-translation-app/"]
+    
+    AppDir --> ApiDir["api/"]
+    ApiDir --> TranslateRoute["translate/route.ts"]
+    
+    AIAppDir --> SrcDir["src/"]
+    AIAppDir --> ConfigFiles["Configuration Files\n- package.json\n- next.config.js\n- etc."]
+    
+    SrcDir --> AppFolder["app/"]
+    SrcDir --> Components["components/"]
+    SrcDir --> Lib["lib/"]
+    SrcDir --> Types["types/"]
+    
+    AppFolder --> PageTS["page.tsx"]
+    AppFolder --> LayoutTS["layout.tsx"]
+    AppFolder --> AppApi["api/"]
+    
+    AppApi --> AppTranslate["translate/route.ts"]
+    AppApi --> AppDocx["docx/route.ts"]
+    AppApi --> AppSaveTranslation["save-translation/"]
+    
+    Components --> EnhancedForm["enhanced-translation-form.tsx"]
+    Components --> GlossaryManager["glossary-manager.tsx"]
+    Components --> AnimatedComponents["Animated UI Components"]
+    
+    Lib --> ApiClient["api-client.ts"]
+    Lib --> Constants["constants.ts"]
+    Lib --> Stores["State Stores"]
+    
+    Stores --> PromptStore["prompt-store.ts"]
+    Stores --> GlossaryStore["glossary-store.ts"]
+    Stores --> ApiKeyStore["api-keys-store.ts"]
+    
+    style Root fill:#f5f5f5,stroke:#333,stroke-width:2px
+    style AppDir fill:#e1f5fe,stroke:#333,stroke-width:1px
+    style AIAppDir fill:#ffe0b2,stroke:#333,stroke-width:1px
+    style SrcDir fill:#e8f5e9,stroke:#333,stroke-width:1px
+    style Components fill:#f3e5f5,stroke:#333,stroke-width:1px
+    style Lib fill:#fff3e0,stroke:#333,stroke-width:1px
