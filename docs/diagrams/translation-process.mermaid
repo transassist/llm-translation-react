@@ -1,0 +1,37 @@
+flowchart TD
+    Start([User Initiates Translation]) --> FileOrText{File or Text?}
+    
+    FileOrText -->|File| FileUpload[Upload & Process File]
+    FileUpload --> ExtractText[Extract Text Content]
+    ExtractText --> PrepareTranslation
+    
+    FileOrText -->|Text| PrepareTranslation[Prepare Translation Request]
+    
+    PrepareTranslation --> ConfigOptions[Configure Translation Options]
+    ConfigOptions --> Domain[Select Domain]
+    ConfigOptions --> Model[Select AI Model]
+    ConfigOptions --> GlossarySel[Select Glossary]
+    ConfigOptions --> PromptSel[Select Prompt Template]
+    
+    Domain & Model & GlossarySel & PromptSel --> BuildPrompt[Build Prompt with Context]
+    
+    BuildPrompt --> InitialTranslation[Perform Initial Translation]
+    InitialTranslation --> PostEdit{Post-Editing?}
+    
+    PostEdit -->|Yes| SecondaryModel[Use Secondary Model]
+    SecondaryModel --> RefineTranslation[Refine Translation]
+    RefineTranslation --> ReturnResult
+    
+    PostEdit -->|No| ReturnResult[Return Translation Result]
+    
+    ReturnResult --> DisplayResult[Display Result to User]
+    DisplayResult --> Export{Export?}
+    
+    Export -->|Yes| ExportDOCX[Generate DOCX]
+    ExportDOCX --> Download[User Downloads File]
+    
+    Export -->|No| End([Translation Complete])
+    Download --> End
+    
+    class Start,End highlight
+    classDef highlight fill:#3c9ee5,stroke:#333,color:white
