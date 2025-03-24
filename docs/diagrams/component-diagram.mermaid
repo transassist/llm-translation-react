@@ -1,0 +1,60 @@
+classDiagram
+    class TranslationForm {
+        +sourceText: string
+        +domain: string
+        +translationModel: object
+        +postEditModel: object
+        +usePostEditing: boolean
+        +handleFileUpload()
+        +onSubmit()
+    }
+    
+    class APIClient {
+        +translateText()
+        +callClaudeAPI()
+        +callOpenAIAPI()
+        +callGeminiAPI()
+    }
+    
+    class TranslationAPI {
+        +POST()
+        -calculateSimilarity()
+        -forceChangesToText()
+    }
+    
+    class DocxAPI {
+        +POST()
+    }
+    
+    class KeyStore {
+        +getApiKey()
+        +setApiKey()
+    }
+    
+    class PromptStore {
+        +getTranslationPromptsByDomain()
+        +getPostEditingPromptsByDomain()
+    }
+    
+    class GlossaryStore {
+        +getGlossariesByDomain()
+        +formatGlossaryForPrompt()
+    }
+    
+    class FileProcessor {
+        +handleFileUpload()
+        +processTXT()
+        +processDOCX()
+        +processPDF()
+    }
+    
+    TranslationForm --> APIClient: Uses
+    TranslationForm --> KeyStore: Reads from
+    TranslationForm --> PromptStore: Reads from
+    TranslationForm --> GlossaryStore: Reads from
+    TranslationForm --> FileProcessor: Uses
+    
+    APIClient --> TranslationAPI: Calls
+    APIClient --> DocxAPI: Calls
+    
+    TranslationAPI --> KeyStore: Uses API key
