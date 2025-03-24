@@ -1,0 +1,35 @@
+flowchart TB
+    subgraph Client["Client (Next.js Frontend)"]
+        UI["UI Components\n/src/components"]
+        TransForm["Translation Form\nenriched-translation-form.tsx"]
+        APIClient["API Client\n/lib/api-client.ts"]
+        Store["State Management\n- API Keys\n- Prompts\n- Glossary"]
+    end
+
+    subgraph Server["Server (Next.js API Routes)"]
+        TransAPI["Translation API\n/app/api/translate"]
+        DocxAPI["DOCX API\n/app/api/docx"]
+        SaveAPI["Save Translation API\n/app/api/save-translation"]
+    end
+
+    subgraph External["External Services"]
+        Claude["Anthropic Claude API"]
+        OpenAI["OpenAI API"]
+        Gemini["Google Gemini API"]
+    end
+
+    UI --> TransForm
+    TransForm --> APIClient
+    APIClient --> TransAPI
+    APIClient --> DocxAPI
+    APIClient --> SaveAPI
+    
+    TransAPI --> Claude
+    TransAPI --> OpenAI
+    TransAPI --> Gemini
+
+    Store -.-> TransForm
+    
+    style Client fill:#f9f9f9,stroke:#333,stroke-width:1px
+    style Server fill:#e6f3ff,stroke:#333,stroke-width:1px
+    style External fill:#f5f5f5,stroke:#333,stroke-width:1px
