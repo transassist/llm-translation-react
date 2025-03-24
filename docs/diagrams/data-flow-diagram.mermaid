@@ -1,0 +1,39 @@
+sequenceDiagram
+    participant User
+    participant UI as UI Components
+    participant Store as State Store
+    participant API as API Client
+    participant Server as Next.js API Routes
+    participant LLM as AI Language Models
+    
+    User->>UI: Enter text or upload file
+    User->>UI: Select domain & model
+    User->>UI: Configure options
+    User->>UI: Click Translate
+    
+    UI->>Store: Get API keys
+    UI->>Store: Get translation prompts
+    UI->>Store: Get glossary terms
+    
+    UI->>API: Call Translation API
+    
+    API->>Server: POST /api/translate
+    
+    Server->>LLM: Make initial translation call
+    LLM-->>Server: Return translation
+    
+    alt Post-editing enabled
+        Server->>LLM: Make post-editing call
+        LLM-->>Server: Return post-edited text
+    end
+    
+    Server-->>API: Return translation result
+    
+    API-->>UI: Update with translation
+    
+    opt Download Document
+        User->>UI: Click Download
+        UI->>API: Call DOCX API
+        API->>Server: POST /api/docx
+        Server-->>User: Download .docx file
+    end
